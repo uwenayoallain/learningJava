@@ -47,17 +47,17 @@ public class UrlDownloader {
         String[] allLinks = new String[1000];
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the url :");
-        String Enteredurl = scanner.nextLine();
+        String EnteredUrl = scanner.nextLine();
         try {
-            Document doc = Jsoup.connect(Enteredurl).get();
+            Document doc = Jsoup.connect(EnteredUrl).get();
             Elements links = doc.select("a[href]");
             int foundLinks = 0;
             int downloadableLinks = 0;
             for (Element link : links) {
                 if( !link.attr("href").contains("#") && !link.attr("href").contains("mailto") && !link.attr("href").contains("tel")  && !link.attr("href").contains("?") && !link.attr("href").contains("./")){
-                    if(!(Arrays.asList(allLinks).contains(Enteredurl + link.attr("href")))){
+                    if(!(Arrays.asList(allLinks).contains(EnteredUrl + link.attr("href")))){
                         if(!link.attr("href").contains("http") && !link.attr("href").contains("https")){
-                    allLinks[links.indexOf(link)] = Enteredurl + link.attr("href");
+                    allLinks[links.indexOf(link)] = EnteredUrl + link.attr("href");
                     }else{
                             allLinks[links.indexOf(link)] =link.attr("href");
                         }
@@ -69,7 +69,7 @@ public class UrlDownloader {
             for (String allLink : allLinks) {
                 if (allLink != null) {
                     System.out.println(allLink);
-                    if(allLink.contains(Enteredurl) && !allLink.contains("/*/")){
+                    if(allLink.contains(EnteredUrl) && !allLink.contains("/*/")){
                         downloadableLinks++;
                     }
                     foundLinks++;
@@ -77,7 +77,7 @@ public class UrlDownloader {
             }
             System.out.println("Total Links Found: " + foundLinks);
             System.out.println("Downloading files");
-            downloadFiles(allLinks, Enteredurl,downloadableLinks);
+            downloadFiles(allLinks, EnteredUrl,downloadableLinks);
         } catch (IOException e) {
             e.printStackTrace();
         }
